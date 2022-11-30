@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,9 +16,7 @@ import com.tanya.newsapp.di.component.DaggerNewsBaseComponent
 import com.tanya.newsapp.di.module.NewsSourceModule
 import com.tanya.newsapp.ui.adapter.NewsCategoryAdapter
 import com.tanya.newsapp.ui.viewmodel.CategoryViewModel
-import com.tanya.newsapp.utils.Resource
 import com.tanya.newsapp.utils.Status
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,7 +53,6 @@ class NewsSourceFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
-//        getArgsAndFetchData()
         setupObserver()
     }
 
@@ -66,12 +62,7 @@ class NewsSourceFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-//    private fun getArgsAndFetchData(){
-//        val category: String? = arguments?.getString(EXTRA_CATEGORY, "country")
-//        category?.let {
-//            categoryListViewModel.fetchData(it)
-//        }
-//    }
+
 
     private fun setupObserver() {
         lifecycleScope.launch {
@@ -91,8 +82,7 @@ class NewsSourceFragment : Fragment() {
                         Status.ERROR -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(activity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            ErrorFragment.addFragment(activity)
                         }
                     }
                 }

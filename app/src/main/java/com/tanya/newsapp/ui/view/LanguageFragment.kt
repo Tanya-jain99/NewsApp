@@ -11,7 +11,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tanya.newsapp.NewsApplication
-import com.tanya.newsapp.R
 import com.tanya.newsapp.data.model.Language
 import com.tanya.newsapp.databinding.FragmentLanguageBinding
 import com.tanya.newsapp.di.component.DaggerLanguageComponent
@@ -81,15 +80,7 @@ class LanguageFragment : Fragment() {
 
                             }
                             Status.ERROR -> {
-                                activity?.supportFragmentManager
-                                    ?.beginTransaction()
-                                    ?.replace(
-                                        R.id.fragment_container,
-                                        ErrorFragment.newInstance(),
-                                        ErrorFragment.TAG
-                                    )
-                                    ?.addToBackStack(ErrorFragment.TAG)
-                                    ?.commit()
+                                ErrorFragment.addFragment(activity)
                             }
                         }
                     }

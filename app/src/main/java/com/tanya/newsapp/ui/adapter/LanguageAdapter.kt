@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.tanya.newsapp.R
 import com.tanya.newsapp.data.model.Language
-import com.tanya.newsapp.data.model.Source
 import com.tanya.newsapp.databinding.CategoryItemLayoutBinding
 import com.tanya.newsapp.di.LanguageFragmentScope
 import com.tanya.newsapp.ui.view.NewsListFragment
@@ -22,11 +20,8 @@ class LanguageAdapter(private val langList: ArrayList<Language>):
              binding.button.text = item.name
              itemView.setOnClickListener {
                  val activity = it.context as AppCompatActivity
-                 activity.supportFragmentManager
-                     .beginTransaction()
-                     .replace(R.id.fragment_container, NewsListFragment.newInstance(Pair(item.id, CATEGORY)))
-                     .addToBackStack(NewsListFragment.TAG)
-                     .commit()
+                 NewsListFragment.addFragment(activity,
+                     Pair(item.id, CATEGORY))
              }
          }
     }

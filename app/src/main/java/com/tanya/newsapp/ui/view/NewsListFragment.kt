@@ -1,11 +1,11 @@
 package com.tanya.newsapp.ui.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tanya.newsapp.NewsApplication
 import com.tanya.newsapp.R
 import com.tanya.newsapp.data.model.Article
-import com.tanya.newsapp.data.model.Country
 import com.tanya.newsapp.databinding.FragmentNewsListBinding
 import com.tanya.newsapp.di.component.DaggerNewsListComponent
 import com.tanya.newsapp.di.module.NewsListModule
@@ -39,7 +38,7 @@ class NewsListFragment : Fragment() {
     private lateinit var binding: FragmentNewsListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentNewsListBinding.inflate(layoutInflater)
         setupUI()
         return binding.root
@@ -60,6 +59,13 @@ class NewsListFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+
+        fun addFragment(activity: FragmentActivity?, param: Pair<String, String>){
+            activity?.supportFragmentManager?.beginTransaction()?.replace(
+                R.id.fragment_container,
+                newInstance(param) )?.addToBackStack(TAG)?.commit()
+            }
+
     }
 
 
@@ -94,16 +100,14 @@ class NewsListFragment : Fragment() {
                             binding.recyclerView.visibility = View.VISIBLE
                         }
                         Status.LOADING -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                            binding.recyclerView.visibility = View.GONE
+                            binding.apply {
+                                progressBar.visibility = View.VISIBLE
+                                recyclerView.visibility = View.GONE
+                            }
                         }
                         Status.ERROR -> {
                             binding.progressBar.visibility = View.GONE
-                            activity?.supportFragmentManager?.beginTransaction()?.
-                            replace(R.id.fragment_container, ErrorFragment.newInstance(),
-                                ErrorFragment.TAG)?.addToBackStack(ErrorFragment.TAG)?.commit()
-                            Toast.makeText(activity, it.message, Toast.LENGTH_LONG)
-                                .show()
+                            ErrorFragment.addFragment(activity)
                         }
                     }
                 }
@@ -112,8 +116,10 @@ class NewsListFragment : Fragment() {
     }
 
     private fun renderList(articleList: List<Article>) {
-        adapter.addData(articleList)
-        adapter.notifyDataSetChanged()
+        adapter.apply{
+            addData(articleList)
+            notifyDataSetChanged()
+        }
     }
 
     private fun injectDependencies() {
