@@ -12,4 +12,16 @@ annotation class ActivityContext
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
-annotation class FragmentContext
+annotation class NewsListFragmentContext
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class NewsSourceFragmentContext
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class CountryFragmentContext
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class LanguageFragmentContext
