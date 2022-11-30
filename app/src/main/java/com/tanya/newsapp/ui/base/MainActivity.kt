@@ -3,11 +3,9 @@ package com.tanya.newsapp.ui.base
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.tanya.newsapp.R
-import com.tanya.newsapp.databinding.ActivityMainBinding
-import com.tanya.newsapp.ui.topheadline.NewsListFragment
+import com.tanya.newsapp.ui.view.ErrorFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +23,17 @@ class MainActivity : AppCompatActivity() {
         if(supportFragmentManager.findFragmentByTag(MainFragment.TAG) == null){
             supportFragmentManager.beginTransaction().add(R.id.fragment_container,
                 MainFragment.newInstance(), MainFragment.TAG).commit()
+        }
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentByTag(ErrorFragment.TAG) != null){
+            supportFragmentManager.popBackStack()
+        }
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
         }
     }
 
