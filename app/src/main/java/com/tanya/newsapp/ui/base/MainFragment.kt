@@ -1,20 +1,18 @@
 package com.tanya.newsapp.ui.base
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.DEBUG
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import com.tanya.newsapp.R
 import com.tanya.newsapp.databinding.FragmentMainBinding
-import com.tanya.newsapp.databinding.FragmentNewsListBinding
-import com.tanya.newsapp.ui.topheadline.NewsListFragment
-import javax.inject.Inject
+import com.tanya.newsapp.ui.view.CountryFragment
+import com.tanya.newsapp.ui.view.LanguageFragment
+import com.tanya.newsapp.ui.view.NewsSourceFragment
+import com.tanya.newsapp.ui.view.NewsListFragment
+import com.tanya.newsapp.utils.AppConstant.COUNTRY
+import com.tanya.newsapp.utils.AppConstant.DEFAULT_CATEGORY
 
 
 class MainFragment : Fragment() {
@@ -28,19 +26,26 @@ class MainFragment : Fragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(layoutInflater)
         binding.topHeadlineBtn.setOnClickListener {
-            Log.println(Log.DEBUG, "MainFragment", "Hey")
-
-            Toast.makeText(requireContext(), "Heyy", Toast.LENGTH_LONG).show()
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
-                NewsListFragment.newInstance(), NewsListFragment.TAG)?.commit()
+                NewsListFragment.newInstance(Pair(COUNTRY, DEFAULT_CATEGORY)), NewsListFragment.TAG)?.
+            addToBackStack(NewsListFragment.TAG)?.commit()
+        }
+        binding.countriesBtn.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
+                CountryFragment.newInstance(),
+                CountryFragment.TAG)?.addToBackStack(CountryFragment.TAG)?.commit()
+        }
+        binding.languagesBtn.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
+                LanguageFragment.newInstance(),
+                LanguageFragment.TAG)?.addToBackStack(LanguageFragment.TAG)?.commit()
+        }
+        binding.newsSourcesBtn.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
+            NewsSourceFragment.newInstance(),
+            NewsSourceFragment.TAG)?.addToBackStack(NewsSourceFragment.TAG)?.commit()
         }
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.println(Log.DEBUG, "MainFragment", "Hello")
-
     }
 
 
