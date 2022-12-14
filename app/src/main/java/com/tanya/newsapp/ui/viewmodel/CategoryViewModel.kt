@@ -5,14 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.tanya.newsapp.data.model.Language
 import com.tanya.newsapp.data.model.Source
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
-import com.tanya.newsapp.di.NewsBaseFragmentScope
+import com.tanya.newsapp.di.FragmentScope
 import com.tanya.newsapp.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-@NewsBaseFragmentScope
+
 class CategoryViewModel(private val topHeadlineRepository: TopHeadlineRepository): ViewModel() {
 
     private val _srcList = MutableStateFlow<Resource<List<Source>>>(Resource.loading())
@@ -27,6 +29,7 @@ class CategoryViewModel(private val topHeadlineRepository: TopHeadlineRepository
     private fun fetchSources() {
         viewModelScope.launch {
             topHeadlineRepository.getNewsSources()
+                .flowOn(Dispatchers.IO)
                 .catch { e ->
                     _srcList.value = Resource.error(e.toString())
                 }
