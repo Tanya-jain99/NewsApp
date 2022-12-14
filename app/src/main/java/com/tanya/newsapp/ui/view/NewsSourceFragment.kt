@@ -91,8 +91,10 @@ class NewsSourceFragment : Fragment() {
     }
 
     private fun renderList(categoryList: List<Source>) {
-        adapter.addData(categoryList)
-        adapter.notifyDataSetChanged()
+        adapter.apply {
+            addData(categoryList)
+            notifyDataSetChanged()
+        }
     }
 
     private fun injectDependencies() {
