@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tanya.newsapp.R
 import com.tanya.newsapp.databinding.FragmentMainBinding
-import com.tanya.newsapp.ui.view.CountryFragment
-import com.tanya.newsapp.ui.view.LanguageFragment
-import com.tanya.newsapp.ui.view.NewsSourceFragment
-import com.tanya.newsapp.ui.view.NewsListFragment
+import com.tanya.newsapp.ui.view.*
 import com.tanya.newsapp.utils.AppConstant.COUNTRY
 import com.tanya.newsapp.utils.AppConstant.DEFAULT_CATEGORY
 
@@ -44,6 +41,12 @@ class MainFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
             NewsSourceFragment.newInstance(),
             NewsSourceFragment.TAG)?.addToBackStack(NewsSourceFragment.TAG)?.commit()
+        }
+        binding.searchBtn.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
+                SearchFragment.newInstance(),
+                SearchFragment.TAG)?.addToBackStack(SearchFragment.TAG)?.commit()
+
         }
         return binding.root
     }
