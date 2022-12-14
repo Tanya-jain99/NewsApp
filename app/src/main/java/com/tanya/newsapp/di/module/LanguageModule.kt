@@ -2,7 +2,8 @@ package com.tanya.newsapp.di.module
 
 import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
-import com.tanya.newsapp.di.LanguageFragmentContext
+import com.tanya.newsapp.di.FragmentContext
+import com.tanya.newsapp.di.FragmentScope
 import com.tanya.newsapp.ui.adapter.LanguageAdapter
 import com.tanya.newsapp.ui.base.ViewModelProviderFactory
 import com.tanya.newsapp.ui.view.LanguageFragment
@@ -14,7 +15,7 @@ import dagger.Provides
 @Module
 class LanguageModule(private val fragment: LanguageFragment) {
 
-    @LanguageFragmentContext
+    @FragmentContext
     @Provides
     fun providesContext()  = fragment.requireContext()
 
@@ -25,6 +26,7 @@ class LanguageModule(private val fragment: LanguageFragment) {
         })[LanguageViewModel::class.java]
     }
 
+    @FragmentScope
     @Provides
     fun providesLanguageAdapter() : LanguageAdapter{
         return LanguageAdapter(ArrayList())
