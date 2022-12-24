@@ -3,6 +3,7 @@ package com.tanya.newsapp.di.component
 import android.content.Context
 import com.tanya.newsapp.NewsApplication
 import com.tanya.newsapp.data.api.NetworkService
+import com.tanya.newsapp.data.local.AppDatabase
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.ApplicationContext
 import com.tanya.newsapp.di.module.ApplicationModule
@@ -22,4 +23,5 @@ interface ApplicationComponent {
 
     fun getTopHeadlineRepository(): TopHeadlineRepository
 
+    fun getAppDatabase() : AppDatabase
 }
