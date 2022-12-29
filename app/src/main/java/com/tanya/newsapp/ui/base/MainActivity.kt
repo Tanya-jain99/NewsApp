@@ -2,20 +2,21 @@ package com.tanya.newsapp.ui.base
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.tanya.newsapp.R
+import com.tanya.newsapp.data.local.AppDatabase
 import com.tanya.newsapp.ui.view.ErrorFragment
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var database: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         addFragment()
-        Log.println(Log.DEBUG, "MainActivity", "Hello")
-
         Toast.makeText(this@MainActivity, "Hello", Toast.LENGTH_LONG).show()
     }
 
