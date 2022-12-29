@@ -1,6 +1,7 @@
 package com.tanya.newsapp.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,8 @@ import com.tanya.newsapp.di.module.NewsListModule
 import com.tanya.newsapp.ui.adapter.TopHeadlineAdapter
 import com.tanya.newsapp.ui.viewmodel.TopHeadlineViewModel
 import com.tanya.newsapp.utils.AppConstant
-import com.tanya.newsapp.utils.Resource
+import com.tanya.newsapp.data.api.NetworkHelper
 import com.tanya.newsapp.utils.Status
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -72,8 +72,8 @@ class NewsListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
-        getArgumentsAndFetchData()
         setupObserver()
+        getArgumentsAndFetchData()
     }
 
     private fun setupUI() {
@@ -91,8 +91,7 @@ class NewsListFragment : Fragment() {
     private fun setupObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-             val articleList : StateFlow<Resource<List<Article>>> = newsListViewModel.fetchNews()
-             articleList.collect {
+             newsListViewModel.articleList.collect {
                     when (it.status) {
                         Status.SUCCESS -> {
                             binding.progressBar.visibility = View.GONE
@@ -135,7 +134,12 @@ class NewsListFragment : Fragment() {
         val data: Map<String?, String?> = mapOf(
             Pair(arguments?.getString(EXTRA_CATEGORY, AppConstant.DEFAULT_CATEGORY),
                 arguments?.getString(EXTRA_ID, AppConstant.COUNTRY)))
-        newsListViewModel.loadData(data)
+        if(NetworkHelper.isOnline(requireContext())) {
+            newsListViewModel.fetchNews(data)
+        } else {
+            Log.e("NewsLisFragment::class","Not connected to internet")
+            newsListViewModel.fetchNewsFromDB(data)
+        }
     }
 
 }
