@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentContext
 import com.tanya.newsapp.di.FragmentScope
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 import com.tanya.newsapp.ui.adapter.LanguageAdapter
 import com.tanya.newsapp.ui.base.ViewModelProviderFactory
 import com.tanya.newsapp.ui.view.LanguageFragment
@@ -20,9 +21,10 @@ class LanguageModule(private val fragment: LanguageFragment) {
     fun providesContext()  = fragment.requireContext()
 
     @Provides
-    fun providesLanguageViewModel(repository: TopHeadlineRepository) : LanguageViewModel {
+    fun providesLanguageViewModel(repository: TopHeadlineRepository,
+                                  dispatcherProviderImpl: DispatcherProviderImpl) : LanguageViewModel {
         return ViewModelProvider(fragment, ViewModelProviderFactory(LanguageViewModel::class){
-               LanguageViewModel(repository)
+               LanguageViewModel(repository, dispatcherProviderImpl)
         })[LanguageViewModel::class.java]
     }
 

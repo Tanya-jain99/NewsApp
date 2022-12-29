@@ -5,10 +5,13 @@ import androidx.room.Room
 import com.tanya.newsapp.NewsApplication
 import com.tanya.newsapp.data.api.KeyInterceptor
 import com.tanya.newsapp.data.api.NetworkService
-import com.tanya.newsapp.data.repository.AppDatabase
-import com.tanya.newsapp.data.repository.ArticleDao
+import com.tanya.newsapp.data.local.AppDatabase
+import com.tanya.newsapp.data.local.ArticleDao
 import com.tanya.newsapp.di.ApplicationContext
 import com.tanya.newsapp.di.BaseUrl
+import com.tanya.newsapp.ui.DispatcherProviderImpl
+import com.tanya.newsapp.utils.Logger
+import com.tanya.newsapp.utils.LoggerImpl
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -65,5 +68,13 @@ class ApplicationModule(private val application: NewsApplication) {
             .addInterceptor(KeyInterceptor())
         return builder.build()
     }
+
+    @Provides
+    @Singleton
+    fun createDispatcher() : DispatcherProviderImpl = DispatcherProviderImpl()
+
+    @Provides
+    @Singleton
+    fun createLogger() : Logger = LoggerImpl()
 
 }

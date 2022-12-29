@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentContext
 import com.tanya.newsapp.di.FragmentScope
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 import com.tanya.newsapp.ui.adapter.CountryAdapter
 import com.tanya.newsapp.ui.base.ViewModelProviderFactory
 import com.tanya.newsapp.ui.view.CountryFragment
@@ -20,10 +21,11 @@ class CountryModule(private val fragment: CountryFragment) {
 
 
     @Provides
-    fun providesCountryViewModel(repository: TopHeadlineRepository) : CountryViewModel {
+    fun providesCountryViewModel(repository: TopHeadlineRepository,
+                                 dispatcherProviderImpl: DispatcherProviderImpl) : CountryViewModel {
            return ViewModelProvider(fragment,
                ViewModelProviderFactory(CountryViewModel::class) {
-                   CountryViewModel(repository)
+                   CountryViewModel(repository, dispatcherProviderImpl)
                })[CountryViewModel::class.java]
     }
 

@@ -7,6 +7,8 @@ import com.tanya.newsapp.data.local.AppDatabase
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.ApplicationContext
 import com.tanya.newsapp.di.module.ApplicationModule
+import com.tanya.newsapp.ui.DispatcherProviderImpl
+import com.tanya.newsapp.utils.Logger
 import dagger.Component
 import javax.inject.Singleton
 
@@ -24,4 +26,9 @@ interface ApplicationComponent {
     fun getTopHeadlineRepository(): TopHeadlineRepository
 
     fun getAppDatabase() : AppDatabase
+
+    fun getDispatcherProvider() : DispatcherProviderImpl
+
+    fun getLogger() : Logger
+
 }

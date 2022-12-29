@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentContext
 import com.tanya.newsapp.di.FragmentScope
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 import com.tanya.newsapp.ui.base.ViewModelProviderFactory
 import com.tanya.newsapp.ui.view.NewsListFragment
 import com.tanya.newsapp.ui.adapter.TopHeadlineAdapter
 import com.tanya.newsapp.ui.viewmodel.TopHeadlineViewModel
+import com.tanya.newsapp.utils.Logger
 import dagger.Module
 import dagger.Provides
 
@@ -22,10 +24,12 @@ class NewsListModule(private val fragment: NewsListFragment) {
     }
 
     @Provides
-    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlineRepository): TopHeadlineViewModel {
+    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlineRepository,
+                                 dispatcherProviderImpl: DispatcherProviderImpl,
+                                logger: Logger): TopHeadlineViewModel {
         return ViewModelProvider(fragment,
             ViewModelProviderFactory(TopHeadlineViewModel::class) {
-                TopHeadlineViewModel(topHeadlineRepository)
+                TopHeadlineViewModel(topHeadlineRepository, dispatcherProviderImpl, logger)
             })[TopHeadlineViewModel::class.java]
     }
 

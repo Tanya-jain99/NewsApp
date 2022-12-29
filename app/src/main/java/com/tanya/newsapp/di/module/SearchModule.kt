@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentContext
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 import com.tanya.newsapp.ui.adapter.SearchAdapter
 import com.tanya.newsapp.ui.base.ViewModelProviderFactory
 import com.tanya.newsapp.ui.view.SearchFragment
@@ -26,10 +27,10 @@ class SearchModule(private val searchFragment: SearchFragment) {
     }
 
     @Provides
-    fun providesViewModel(repository: TopHeadlineRepository) : SearchViewModel{
+    fun providesViewModel(repository: TopHeadlineRepository, dispatcherProvider: DispatcherProviderImpl) : SearchViewModel{
         return ViewModelProvider(searchFragment,
             ViewModelProviderFactory(SearchViewModel::class){
-            SearchViewModel(repository)
+            SearchViewModel(repository, dispatcherProvider)
         })[SearchViewModel::class.java]
     }
 

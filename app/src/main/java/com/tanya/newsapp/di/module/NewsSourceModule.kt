@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentContext
 import com.tanya.newsapp.di.FragmentScope
-import com.tanya.newsapp.ui.base.ViewModelProviderFactory
-import com.tanya.newsapp.ui.viewmodel.CategoryViewModel
-import com.tanya.newsapp.ui.view.NewsSourceFragment
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 import com.tanya.newsapp.ui.adapter.NewsCategoryAdapter
+import com.tanya.newsapp.ui.base.ViewModelProviderFactory
+import com.tanya.newsapp.ui.view.NewsSourceFragment
+import com.tanya.newsapp.ui.viewmodel.CategoryViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -22,10 +23,11 @@ class NewsSourceModule(private val fragment: NewsSourceFragment) {
     }
 
     @Provides
-    fun provideCategoryListViewModel(topHeadlineRepository: TopHeadlineRepository): CategoryViewModel {
+    fun provideCategoryListViewModel(topHeadlineRepository: TopHeadlineRepository,
+                                     dispatcherProviderImpl: DispatcherProviderImpl): CategoryViewModel {
         return ViewModelProvider(fragment,
             ViewModelProviderFactory(CategoryViewModel::class) {
-                CategoryViewModel(topHeadlineRepository)
+                CategoryViewModel(topHeadlineRepository, dispatcherProviderImpl)
             })[CategoryViewModel::class.java]
     }
 
