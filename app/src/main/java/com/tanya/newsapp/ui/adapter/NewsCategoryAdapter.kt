@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.tanya.newsapp.data.model.Source
 import com.tanya.newsapp.databinding.CategoryItemLayoutBinding
-import com.tanya.newsapp.di.NewsBaseFragmentScope
 import com.tanya.newsapp.ui.view.NewsListFragment
 
-@NewsBaseFragmentScope
 class NewsCategoryAdapter (
     private val categoryList: ArrayList<Source>
 ) : RecyclerView.Adapter<NewsCategoryAdapter.DataViewHolder>() {

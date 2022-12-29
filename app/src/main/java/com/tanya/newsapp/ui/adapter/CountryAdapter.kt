@@ -7,10 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.tanya.newsapp.data.model.Country
 import com.tanya.newsapp.databinding.CategoryItemLayoutBinding
-import com.tanya.newsapp.di.CountryFragmentScope
 import com.tanya.newsapp.ui.view.NewsListFragment
 
-@CountryFragmentScope
+
 class CountryAdapter(
     private val countryList: ArrayList<Country>
 ) : RecyclerView.Adapter<CountryAdapter.DataViewHolder>() {

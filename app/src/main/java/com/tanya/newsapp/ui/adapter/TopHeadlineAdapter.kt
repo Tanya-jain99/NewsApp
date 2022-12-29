@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tanya.newsapp.data.model.Article
 import com.tanya.newsapp.databinding.TopHeadlineItemLayoutBinding
-import com.tanya.newsapp.di.FragmentScope
 
-@FragmentScope
 class TopHeadlineAdapter (
     private val articleList: ArrayList<Article>
 ) : RecyclerView.Adapter<TopHeadlineAdapter.DataViewHolder>() {
@@ -22,7 +20,7 @@ class TopHeadlineAdapter (
             binding.textViewDescription.text = article.description
             binding.textViewSource.text = article.source.name
             Glide.with(binding.imageViewBanner.context)
-                .load(article.imageUrl)
+                .load(article.urlToImage)
                 .into(binding.imageViewBanner)
             itemView.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()

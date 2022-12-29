@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.tanya.newsapp.data.model.Language
 import com.tanya.newsapp.databinding.CategoryItemLayoutBinding
-import com.tanya.newsapp.di.LanguageFragmentScope
+import com.tanya.newsapp.di.FragmentScope
 import com.tanya.newsapp.ui.view.NewsListFragment
 
-@LanguageFragmentScope
+
 class LanguageAdapter(private val langList: ArrayList<Language>):
     RecyclerView.Adapter<LanguageAdapter.DataViewHolder>() {
     class DataViewHolder(private val binding: CategoryItemLayoutBinding) :
