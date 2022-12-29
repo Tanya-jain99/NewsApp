@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tanya.newsapp.data.model.Language
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
+import com.tanya.newsapp.ui.DispatcherProvider
+import com.tanya.newsapp.ui.DispatcherProviderImpl
 
 import com.tanya.newsapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
 
-class LanguageViewModel(val repository: TopHeadlineRepository) : ViewModel() {
+class LanguageViewModel(val repository: TopHeadlineRepository,
+                        private val dispatcherProvider: DispatcherProvider) : ViewModel() {
 
     private var _langSrcList = MutableStateFlow<Resource<List<Language>>>(Resource.loading())
 
@@ -25,9 +28,9 @@ class LanguageViewModel(val repository: TopHeadlineRepository) : ViewModel() {
     }
 
     private fun fetchLanguages() {
-      viewModelScope.launch {
+      viewModelScope.launch(dispatcherProvider.main) {
           repository.getLanguages()
-              .flowOn(Dispatchers.Default)
+              .flowOn(dispatcherProvider.default)
               .catch {
                   e -> _langSrcList.value = Resource.error(e.toString())
               }

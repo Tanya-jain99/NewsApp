@@ -2,9 +2,9 @@ package com.tanya.newsapp.utils
 
 interface Logger {
 
-    fun e(msg: String)
+    fun e(tag: String, msg: String)
 
-    fun d(msg: String)
+    fun d(tag: String, msg: String)
 
-    fun i(msg: String)
+    fun i(tag: String, msg: String)
 }

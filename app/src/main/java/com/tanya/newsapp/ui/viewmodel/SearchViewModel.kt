@@ -5,21 +5,20 @@ import androidx.lifecycle.viewModelScope
 import com.tanya.newsapp.data.model.NetworkArticle
 import com.tanya.newsapp.data.repository.TopHeadlineRepository
 import com.tanya.newsapp.di.FragmentScope
+import com.tanya.newsapp.ui.DispatcherProvider
 import com.tanya.newsapp.utils.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @FragmentScope
-class SearchViewModel(private val repository: TopHeadlineRepository): ViewModel() {
+class SearchViewModel(private val repository: TopHeadlineRepository,
+                      private val dispatcherProvider: DispatcherProvider): ViewModel() {
 
     private val _searchList = MutableStateFlow<Resource<List<NetworkArticle>>>(Resource.loading())
     val searchList : StateFlow<Resource<List<NetworkArticle>>> = _searchList
 
-
-
     fun getSearchResult(queryFlow: StateFlow<String>)  {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
 
             queryFlow.debounce(300)
                 .distinctUntilChanged()
@@ -35,7 +34,7 @@ class SearchViewModel(private val repository: TopHeadlineRepository): ViewModel(
                     return@flatMapLatest repository.getSearchResults(query).catch {
                         emitAll(flowOf(emptyList()))
                     }
-                }.flowOn(Dispatchers.IO)
+                }.flowOn(dispatcherProvider.io)
                 .collect {
                       _searchList.value = Resource.success(it)
                 }
