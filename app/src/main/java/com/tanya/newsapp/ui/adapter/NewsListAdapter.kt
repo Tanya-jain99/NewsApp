@@ -1,7 +1,6 @@
 package com.tanya.newsapp.ui.adapter
 
 import android.net.Uri
-import android.provider.MediaStore.Audio.ArtistColumns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
@@ -10,10 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tanya.newsapp.databinding.TopHeadlineItemLayoutBinding
-import com.tanya.newsapp.data.local.entities.ArticleEntity
 import com.tanya.newsapp.data.model.Article
 
-class TopHeadlineAdapter : PagingDataAdapter<Article, TopHeadlineAdapter.DataViewHolder>(COMPARATOR) {
+class NewsListAdapter : PagingDataAdapter<Article, NewsListAdapter.DataViewHolder>(COMPARATOR) {
 
     class DataViewHolder(private val binding: TopHeadlineItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
