@@ -135,12 +135,9 @@ Now you just have to import project in Android studio and Build it and Run.
     ├───values
 ```
 ## 🚀 About Me
-Hi there! My name is Tanya Jain, and I work as an API developer at HSBC. 
-In my current role, I am responsible for developing and maintaining APIs that are used by various applications within the organization.
+Hi there! My name is Tanya Jain, I work as a Software Developer and like to expand my skill set in my spare time.
 
-Outside of work, I love to explore new technologies and programming languages to keep my skills up to date. In my spare time, I enjoy coding and building Android applications. 
-
-If you have any questions or just want to chat, feel free to reach out to me on : 
+If you have any questions or want to connect, feel free to reach out to me on : 
 
 - [LinkedIn](https://www.linkedin.com/in/tanyajain06)
 - [GitHub](https://github.com/Tanya-Jain99)
